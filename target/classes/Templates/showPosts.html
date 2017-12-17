@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>All Posts</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/showPosts}" th:object="${Post}">
+<h1>Welcome </h1>
+	<table border="1">
+		<tr>
+			<td>UId</td>
+			<td>PID</td>
+			<td>Post</td>
+		</tr>
+		
+		<tr th:each="Post : ${Post}">
+			<td th:text="${Post.Uid}"></td>
+			<td th:text="${Post.Pid}"></td>
+			<td th:text="${Post.Words}"></td>
+			
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

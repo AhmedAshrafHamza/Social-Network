@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>All Students</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/Accept}" th:object="${Data}">
+<h1>Welcome </h1>
+<h1 th:text="${Data.name}"></h1>
+	<table border="1">
+		<tr>
+			<td>Id</td>
+			<td>Name</td>
+			<td>Email</td>
+		</tr>
+		
+		<tr th:each="Data : ${Data}">
+			<td th:text="${Data.id}"></td>
+			<td th:text="${Data.name}"></td>
+			<td th:text="${Data.email}"></td>
+			
+		</tr>
+	</table>
+	</form>
+</body>
+</html>
