@@ -136,19 +136,54 @@ public class UserController {
 		for(Post student : Iterable){
 			List.add(student);
 		}
-		
+		List<Post>itr=new ArrayList<Post>();
 		for(int i=0;i<List.size();i++)
 		{
 			Post x=List.get(i);
 		
-			if(x.getUid()!=0&&x.getPid()!=0&&x.getWords()!=null){m.addAttribute("Post",x);
-		
-			return "showPosts";}
+			if(x.getUid()!=0&&x.getPid()!=0&&x.getWords()!=null){itr.add(x);}
 		};
 		 	
-		
+		m.addAttribute("Post",itr);
 	return"showPosts";
 	}
 	
+	@GetMapping("/Like")
+	public String addLike(Model m)
+	{
+		m.addAttribute("Post",new Post());
+		System.out.println("Function");
+		return "Like";
+	}
+	@PostMapping("/Like")
+	public String addLike(Model m,@ModelAttribute Post D)
+	{
+		
+		D.setLikes(D.getLikes()+1);
+		
+		m.addAttribute("Post",new Post());
+		System.out.println(D.getLikes());
+		repo2.save(D);
+		return "Like";
+	}
+	/*
+	@GetMapping("/Like")
+	public String Like(Model m)
+	{
+		m.addAttribute("Post", new Post());
+		return "Like";
+	}
+	@PostMapping("/Like")
+	public String Like(Model m,@ModelAttribute Post D)
+	{
+		D.setLikes(D.getLikes()+1);
+		D.setUid(24);
+		D.setPid(1);
+		
+		m.addAttribute("Post",new Post());	
+		repo2.save(D);
+		return "Like";
+	}
+	*/
 	
 }

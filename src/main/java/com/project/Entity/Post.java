@@ -7,17 +7,27 @@ public class Post {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int Pid;
 	private int Uid;
-	public Post(String words, int pid, int uid) {
+	private int likes;
+	public Post(String words, int pid, int uid,int l) {
 		super();
 		Words = words;
 		Pid = pid;
 		Uid = uid;
+		likes=l;
+		
 	}
 	public Post()
 	{
 		Words="";
 		Pid=0;
 		Uid=0;
+		likes=0;
+	}
+	public int getLikes() {
+		return likes;
+	}
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
 	public String getWords() {
 		return Words;

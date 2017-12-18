@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form method="post" th:action="@{/showPosts}" th:object="${Post}">
+<form method="post" th:action="@{/Like}" th:object="${Post}">
 <h1>Welcome </h1>
 	<table border="1">
 		<tr>
@@ -21,7 +21,7 @@
 			<td th:text="${Post.Pid}"></td>
 			<td th:text="${Post.Words}"></td>
 			<td th:text="${Post.likes}"></td>
-			<td><button class="UserController" th:onclick="|addLike();|" >l</button></td>
+			<td><button class="UserController" th:onclick="|addLike(${Post});|" >l</button></td>
 		</tr>
 	</table>
 	</form>
