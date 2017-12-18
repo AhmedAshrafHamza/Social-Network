@@ -37,8 +37,13 @@ public class UserController {
 	{
 		System.out.println(D.getName());
 		System.out.println(D.getPassword());
-		D.setId(count);
-		count++;
+		Iterable<Data> Iterable = repo.findAll();
+		
+		int c=1;
+		for(Data student : Iterable){
+			c++;
+		}
+		D.setId(c+1);
 		repo.save(D);
 		m.addAttribute("Data", new Data());
 		return "addUser2";
@@ -60,7 +65,7 @@ public class UserController {
 		{
 			Data x=studentsList.get(i);
 			System.out.println(x.getName());
-			if(x.getEmail()!=null&&x.getPassword()!=null&&x.getEmail().equals(y.getEmail())==true&&x.getPassword().equals(y.getPassword())==true){model.addAttribute("Data",x);
+			if(x.getEmail()!=null&&x.getPassword()!=null&&x.getEmail().equals(y.getEmail())==true&&x.getPassword().equals(y.getPassword())==true){t.setId(x.getId());model.addAttribute("Data",x);
 		
 			return "Accept";}
 		};
@@ -113,8 +118,14 @@ public class UserController {
 		System.out.println(t.getEmail());
 		System.out.println(t.getId());
 		m.addAttribute("Post",new Post());		
-		D.setUid(24);
-		D.setPid(2);
+		D.setUid(t.getId());
+		Iterable<Post> Iterable = repo2.findAll();
+		int c=1;
+		for(Post student : Iterable){
+			if(student.getUid()==t.getId())c++;
+		}
+		D.setPid(c+1);
+		
 		repo2.save(D);
 		
 		/*
@@ -151,19 +162,34 @@ public class UserController {
 	@GetMapping("/Like")
 	public String addLike(Model m)
 	{
-		m.addAttribute("Post",new Post());
+		Iterable<Post> Iterable = repo2.findAll();
+		List<Post> List = new ArrayList<Post>();
+		for(Post student : Iterable){
+			List.add(student);
+		}
+		List<Post>itr=new ArrayList<Post>();
+		for(int i=0;i<List.size();i++)
+		{
+			Post x=List.get(i);
+		
+			if(x.getUid()!=0&&x.getPid()!=0&&x.getWords()!=null){itr.add(x);}
+		};
+		 	
+		m.addAttribute("Post",itr);
 		System.out.println("Function");
 		return "Like";
 	}
 	@PostMapping("/Like")
 	public String addLike(Model m,@ModelAttribute Post D)
 	{
-		
-		D.setLikes(D.getLikes()+1);
-		
+		System.out.println(D.getUid());
+		/*
+		System.out.println(D.getUid());
+		D.setLikes(D.getLikes()+1);*/
+		/*
 		m.addAttribute("Post",new Post());
 		System.out.println(D.getLikes());
-		repo2.save(D);
+		repo2.save(D);*/
 		return "Like";
 	}
 	/*

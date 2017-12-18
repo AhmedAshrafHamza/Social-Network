@@ -21,7 +21,7 @@
 			<td th:text="${Post.Pid}"></td>
 			<td th:text="${Post.Words}"></td>
 			<td th:text="${Post.likes}"></td>
-			<td><button class="UserController" th:onclick="|addLike();|" >l</button></td>
+			<td><button class="UserController" th:onclick="|addLike(${Post});|" >l</button></td>
 		</tr>
 	</table>
 	</form>
