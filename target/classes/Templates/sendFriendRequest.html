@@ -67,10 +67,10 @@ li a {
 <body>
    
     
-    <div><img  id="pic" src="E:\lectures\FCI-CU YEAR 2\Third Year\OP\OP Ass\AS1\project\src\main\resources\Templates\FBC.JPG"/><br></br>
-    <form method="post" th:action="@{/CreatePost}" th:object="${Post}" >
-        <b>Post:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-        <input  type="text" th:field="*{Words}"/><br></br>
+    <div><img  id="pic" src="E:\lectures\FCI-CU YEAR 2\Third Year\OP\OP Ass\AS1\project\src\main\resources\Templates\FR.PNG"/><br></br>
+    <form method="post" th:action="@{/sendFriendRequest}" th:object="${FriendRequest}" >
+        <b>Write Receiver ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+        <input  type="text" th:field="*{RecieverID}"/><br></br>
         <br></br>
         
         <input  type="submit" value="submit"/>

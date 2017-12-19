@@ -16,9 +16,11 @@
 			<td>Likes</td>
 		</tr>
 		
-		<tr>
-			<td><input type="text" th:field="*{Pid}"/></td>
-			<td><input type="submit" value="submit"/></td>
+		<tr th:each="Post : ${Post}">
+			<td th:text="${Post.Uid}"></td>
+			<td th:text="${Post.Pid}"></td>
+			<td th:text="${Post.Words}"></td>
+			<td th:text="${Post.likes}"></td>
 			<td><button class="UserController" th:onclick="|addLike(${Post});|" >l</button></td>
 		</tr>
 	</table>

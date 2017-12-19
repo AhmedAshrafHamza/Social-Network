@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>All FriendRq</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/ShowFriendRequest}" th:object="${FriendRequest}">
+<h1>Welcome </h1>
+	<table border="1">
+		<tr>
+			<td>SenderID</td>
+			<td>ReceiverID</td>
+			<td>RequestID</td>
+
+		</tr>
+		
+		<tr th:each="FriendRequest : ${FriendRequest}">
+			<td th:text="${FriendRequest.SenderID}"></td>
+			<td th:text="${FriendRequest.RecieverID}"></td>
+			<td th:text="${FriendRequest.RequestID}"></td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

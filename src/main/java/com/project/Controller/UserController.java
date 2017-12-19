@@ -6,17 +6,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import com.project.Entity.FriendRequest;
 import com.project.Entity.Data;
 import com.project.Entity.Post;
 import com.project.Repositories.DataRepository;
 import com.project.Repositories.PostRepository;
+import com.project.Repositories.FriendRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.*;
+
+
 
 @Controller
 public class UserController {
@@ -26,6 +29,10 @@ public class UserController {
 	private DataRepository repo;
 	@Autowired
 	private PostRepository repo2;
+	@Autowired
+	private FriendRepository repo3;
+	
+	
 	@GetMapping("/addUser2")
 	public String shpowUser(Model model)
 	{
@@ -138,6 +145,32 @@ public class UserController {
 		
 		return "CreatePost";	
 	}
+	@PostMapping("/sendFriendRequest")
+	public String  SFR(Model m,@ModelAttribute FriendRequest D)
+	{
+		
+		System.out.println(t.getEmail());
+		System.out.println(t.getId());
+		m.addAttribute("FriendRequest",new FriendRequest());		
+		D.setSenderID(t.getId());
+		Iterable<FriendRequest> Iterable = repo3.findAll();
+		int c=1;
+		for(FriendRequest student : Iterable){
+			if(student.getSenderID()==t.getId())c++;
+		}
+		D.setRequestID(c+1);
+		
+		repo3.save(D);
+	
+		
+		return "SendFriendRequest";	
+	}
+	@GetMapping("/sendFriendRequest")
+	public String  SFR(Model m)
+	{
+		m.addAttribute("FriendRequest",new FriendRequest());
+		return"sendFriendRequest";
+	}
 	
 	@GetMapping("/showPosts")
 	public String GetPosts (Model m)
@@ -191,6 +224,49 @@ public class UserController {
 		System.out.println(D.getLikes());
 		repo2.save(D);*/
 		return "Like";
+	}
+	
+	
+	@GetMapping("/ShowFriendRequest")
+	public String showFriendRequest(Model model)
+	{
+		
+		Iterable<FriendRequest> Iterable = repo3.findAll();
+		List<FriendRequest> List = new ArrayList<FriendRequest>();
+		for(FriendRequest student : Iterable){
+			List.add(student);
+		}
+		List<FriendRequest>itr=new ArrayList<FriendRequest>();
+		for(int i=0;i<List.size();i++)
+		{
+			FriendRequest x=List.get(i);
+		
+			if(x.getRecieverID()!=0&&x.getRequestID()!=0&&x.getSenderID()!=0&&x.getRecieverID()==t.getId()){itr.add(x);}
+		};
+		 	
+		
+		model.addAttribute("FriendRequest",itr);
+		return"ShowFriendRequest";
+	}
+	
+	@PostMapping("/ShowFriendRequest")
+	public String sendFriendRequest(Model model,@ModelAttribute FriendRequest fr)
+	{
+		
+		System.out.println(t.getEmail());
+		System.out.println(t.getId());
+		model.addAttribute("FriendRequest",new FriendRequest());		
+		fr.setSenderID(t.getId());
+		Iterable<FriendRequest> Iterable = repo3.findAll();
+		int c=1;
+		
+		for(FriendRequest student : Iterable){
+			if(student.getSenderID()==t.getId())c++;
+		}
+		fr.setRequestID(c+1);
+		model.addAttribute("FriendRequest", fr);
+		repo3.save(fr);
+		return"ShowFriendRequest";
 	}
 	/*
 	@GetMapping("/Like")
