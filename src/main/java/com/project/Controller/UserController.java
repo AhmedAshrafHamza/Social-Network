@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.project.Entity.FriendRequest;
 import com.project.Entity.Data;
+import com.project.Entity.Friend;
 import com.project.Entity.Post;
 import com.project.Repositories.DataRepository;
+import com.project.Repositories.FriendList;
 import com.project.Repositories.PostRepository;
 import com.project.Repositories.FriendRepository;
 
@@ -31,6 +33,8 @@ public class UserController {
 	private PostRepository repo2;
 	@Autowired
 	private FriendRepository repo3;
+	@Autowired
+	private FriendList repo4;
 	
 	
 	@GetMapping("/addUser2")
@@ -268,20 +272,61 @@ public class UserController {
 		repo3.save(fr);
 		return"ShowFriendRequest";
 	}
-	/*
-	@GetMapping("/Like")
-	public String Like(Model m)
+	
+	@GetMapping("/Friend")
+	public String ShowFriend(Model m)
 	{
-		m.addAttribute("Post", new Post());
-		return "Like";
+		Iterable<Friend> Iterable = repo4.findAll();
+		List<Friend> List = new ArrayList<Friend>();
+		for(Friend student : Iterable){
+			List.add(student);
+		}
+		List<Friend>itr=new ArrayList<Friend>();
+		for(int i=0;i<List.size();i++)
+		{
+			Friend x=List.get(i);
+			if(x.getFriends()!=0&&x.getFriendID()!=0&&x.getUserID()!=0&&x.getUserID()==t.getId()){itr.add(x);}
+		};
+		 	
+		
+		m.addAttribute("Friend",itr);
+		return "Friend";
 	}
+	
+	
+	@PostMapping("/AcceptFriendRequest")
+	public String AFR(Model m,@ModelAttribute Friend D)
+	{
+		
+		
+		System.out.println(t.getEmail());
+		System.out.println(t.getId());
+		m.addAttribute("Friend",new Friend());		
+		D.setUserID(t.getId());
+		Iterable<Friend> Iterable = repo4.findAll();
+		int c=1;
+		for(Friend student : Iterable){
+			c++;
+			
+		}
+		D.setFriends(c+1);
+		
+		repo4.save(D);
+		
+		return "AcceptFriendRequest";
+	}
+	
+	@GetMapping("/AcceptFriendRequest")
+	public String  AFR(Model m)
+	{
+		m.addAttribute("Friend",new Friend());
+		return"AcceptFriendRequest";
+	}
+	/*
 	@PostMapping("/Like")
 	public String Like(Model m,@ModelAttribute Post D)
 	{
 		D.setLikes(D.getLikes()+1);
-		D.setUid(24);
-		D.setPid(1);
-		
 		m.addAttribute("Post",new Post());	
 		repo2.save(D);
 		return "Like";
